@@ -14,24 +14,32 @@ const uri = process.env.MONGODB_URI
 
 
 
-const client = new MongoClient(uri)
-let db
-
-client.connect().then(()=>{
-    db = client.db()
-    console.log(`Connected to ${uri}`)
-
-})
+// const client = new MongoClient(uri)
+// let db
 
 
 
-async function connectDatabase(fastify, options) {try{
-   await fastify.register(fastifyDB, {url: uri})
-    fastify.log(`connected to ${MONGODB_URI}`)
+async function connectDatabase(app) {try{
+
+    app.register(fastifyDB, {url: uri})
+    await app.mongo.client.connect();
+    console.log(`connected to ${uri}`)
 } catch (error){
-    console.log(error)
-    console.log("failed to connect")
-}
+    console.log("connection error")
 }
 
-module.exports = fastifyPlugin(connectDatabase) 
+//    await client.connect().then(()=>{
+
+//         db = client.db()
+//         console.log(`Connected to ${uri}`)
+//     })
+
+// } catch (error){
+//     console.log(error)
+//     console.log("failed to connect")
+// } 
+}
+
+// connectDatabase()
+
+module.exports = connectDatabase
