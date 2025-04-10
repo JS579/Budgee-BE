@@ -1,45 +1,21 @@
-const dotenv = require("dotenv")
-const {MongoClient} = require("mongodb")
-const fastifyDB = require("fastify-mongodb")
-const fastifyPlugin = require("fastify-plugin")
-const path = require("path")
+const dotenv = require("dotenv");
+const path = require("path");
+const fastifyDB = require("fastify-mongodb");
 
-
-const ENV = process.env.NODE_ENV || "development"
-
+const ENV = process.env.NODE_ENV || "development";
 
 dotenv.config({ path: `${__dirname}/../.env.${ENV}` });
 
-const uri = process.env.MONGODB_URI
+const uri = process.env.MONGODB_URI;
 
-
-
-// const client = new MongoClient(uri)
-// let db
-
-
-
-async function connectDatabase(app) {try{
-
-    app.register(fastifyDB, {url: uri})
-    await app.mongo.client.connect();
-    console.log(`connected to ${uri}`)
-} catch (error){
-    console.log("connection error")
+async function connectDatabase(app) {
+  try {
+    console.log("Registering MongoDB plugin...");
+    await app.register(fastifyDB, { url: uri });
+    console.log(`Connected to MongoDB at ${uri}`);
+  } catch (error) {
+    console.error("Error while connecting to MongoDB:", error.message);
+  }
 }
 
-//    await client.connect().then(()=>{
-
-//         db = client.db()
-//         console.log(`Connected to ${uri}`)
-//     })
-
-// } catch (error){
-//     console.log(error)
-//     console.log("failed to connect")
-// } 
-}
-
-// connectDatabase()
-
-module.exports = connectDatabase
+module.exports = connectDatabase;
