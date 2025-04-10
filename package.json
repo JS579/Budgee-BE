@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node listener.js"
+    "start": "NODE_ENV=development node listener.js"
   },
   "repository": {
     "type": "git",
@@ -19,11 +19,13 @@
   },
   "homepage": "https://github.com/JS579/Budgee-BE#readme",
   "dependencies": {
+    "@fastify/mongodb": "^9.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "fastify": "^5.2.2",
     "fastify-mongodb": "^4.1.1",
+    "fastify-plugin": "^5.0.1",
     "mongoose": "^8.13.2",
     "supertest": "^7.1.0"
   },
