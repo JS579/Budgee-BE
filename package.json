@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start": "node listener.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "fastify": "^5.2.2",
+    "fastify-mongodb": "^4.1.1",
     "mongoose": "^8.13.2",
     "supertest": "^7.1.0"
   },
