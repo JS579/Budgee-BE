@@ -1,33 +1,33 @@
-module.exports=[
-    {
-     catagory_id : null,
-     date: '2024-04-11',       
-     amount: 350,      
-     description: 'food'  
-    },
-    {
-    catagory_id : null,
-    date: '2025-01-12',       
-    amount: 900,      
-    description: 'paying rent,morgage'  
-    },
-    {
-    catagory_id : null,
-    date: '2025-04-11',       
-    amount: 210,      
-    description: 'payment of bills'  
-    },
-    {
-    catagory_id : null,
-    date: '2024-11-11',       
-    amount: 250,      
-    description: 'travel expense'  
-    },    
-    {
-    catagory_id : null,
-    date: '2024-08-11',       
-    amount: 150,      
-    description: 'Expenses of health'  
-    },
-    ] 
+module.exports = [
+  {
+    date: new Date("2024-11-03"),
+    amount: 45,
+    description: "Weekly groceries",
+  },
+  {
+    date: new Date("2024-11-04"),
+    amount: 20,
+    description: "Bus pass",
+  },
+  {
+    date: new Date("2024-11-10"),
+    amount: 12,
+    description: "Netflix subscription",
+  },
+  {
+    date: new Date("2024-12-02"),
+    amount: 150,
+    description: "Electric bill",
+  },
+  {
+    date: new Date("2024-12-03"),
+    amount: 90,
+    description: "Jacket",
+  },
+  {
+    date: new Date("2024-12-05"),
+    amount: 55,
+    description: "Dining out",
+  },
+];
 

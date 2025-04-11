@@ -1,20 +1,13 @@
 const Fastify = require("fastify");
 const connectDatabase = require("../connection");
 
-const colours = [
-  {name: "Red", hex_code: "#FF0000"},
-  {name: "Green", hex_code: "#00FF00"},
-  {name: "Blue", hex_code: "#0000FF"},
-  {name: "Yellow", hex_code: "#FFFF00"},
-  {name: "Purple", hex_code: "#800080"},
-  {name: "Orange", hex_code: "#FFA500"},
-  {name: "Pink", hex_code: "#FFC0CB"},
-  {name: "Black", hex_code: "#000000"},
-  {name: "White", hex_code: "#FFFFFF"},
-  {name: "Gray", hex_code: "#808080"},
-];
-
-const seed = async () => {
+const seed = async ({
+  budgetsData,
+  usersData,
+  categoriesData,
+  expensesData,
+  coloursData,
+}) => {
   try {
     const fastify = Fastify({logger: true});
     await connectDatabase(fastify);
@@ -36,22 +29,49 @@ const seed = async () => {
 
     console.log("Collections cleared");
 
-    await coloursCol.insertMany(colours);
-      console.log("Collections colours created");
-      await usersCol.insertMany(users);
-      await budgetsCol.insertMany(budgets);
-      await categoriesCol.insertMany(categories);
-      //TODO: insert budget and cat Id)
-      await expensesCol.insertMany(expensesToInsert);
-      process.exit(0);
-  } catch(err){
-      console.log(err)
+    const {insertedIds: colourIds} = await coloursCol.insertMany(coloursData);
+    console.log("Seeded colours");
+
+    const categoriesWithColourIds = categoriesData.map((category, index) => ({
+      ...category,
+      colour_id: colourIds[Object.keys(colourIds)[index]],
+    }));
+
+    const {insertedIds: categoryIds} = await categoriesCol.insertMany(
+      categoriesWithColourIds
+    );
+    console.log("Seeded categories");
+
+    await usersCol.insertMany(usersData);
+    console.log("Seeded users");
+
+    const budgetsWithUsernames = budgetsData.map((budget, index) => ({
+      ...budget,
+      username: usersData[index % usersData.length].username,
+    }));
+
+    const {insertedIds: budgetIds} = await budgetsCol.insertMany(
+      budgetsWithUsernames
+    );
+    console.log("Seeded budgets");
+
+    const expensesWithBudgetAndCategoryIds = expensesData.map((expense, index) => ({
+      ...expense,
+      category_id:
+        categoryIds[Object.keys(categoryIds)[index % categoriesData.length]],
+      budget_id: budgetIds[Object.keys(budgetIds)[index % budgetsData.length]],
+    }));
+
+    await expensesCol.insertMany(expensesWithBudgetAndCategoryIds);
+
+    console.log("Database seeded successfully");
+    process.exit(0);
+  } catch (err) {
+    console.error("Seeding error:", err);
+    process.exit(1);
   }
 };
 
-module.exports = seed
-
-
-
+module.exports = seed;
 
 
