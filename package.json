@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "NODE_ENV=development node listener.js"
+    "start": "NODE_ENV=development node listener.js",
+    "seed-dev": "node ./db/seeds/run-seed.js",
+    "seed-test": "jest seed.test.js"
   },
   "repository": {
     "type": "git",
@@ -35,3 +37,5 @@
     "mocha": "^11.1.0"
   }
 }
+
+
