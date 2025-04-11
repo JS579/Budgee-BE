@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "NODE_ENV=development node listener.js"
+    "start": "NODE_ENV=development node listener.js",
+    "server": "fastify start listener.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "fastify": "^5.2.2",
+    "fastify-cli": "^7.4.0",
     "fastify-mongodb": "^4.1.1",
     "fastify-plugin": "^5.0.1",
     "mongoose": "^8.13.2",

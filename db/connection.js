@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 const path = require("path");
-const fastifyDB = require("fastify-mongodb");
+const fastifyDB = require("@fastify/mongodb");
+const fastifyPlugin = require("fastify-plugin")
 
 const ENV = process.env.NODE_ENV || "development";
 
@@ -18,4 +19,4 @@ async function connectDatabase(app) {
   }
 }
 
-module.exports = connectDatabase;
+module.exports = fastifyPlugin(connectDatabase);
