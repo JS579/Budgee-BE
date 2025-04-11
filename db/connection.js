@@ -8,10 +8,13 @@ dotenv.config({ path: `${__dirname}/../.env.${ENV}` });
 const uri = process.env.MONGODB_URI;
 
 async function connectDatabase(fastify, options) {
- 
-
- fastify.register(require('@fastify/mongodb'), { url: uri });
-
+  try {
+    console.log("Registering MongoDB plugin...");
+    await fastify.register(require('@fastify/mongodb'), { url: uri });
+    console.log(`Connected to MongoDB at ${uri}`);
+  } catch (error) {
+    console.error("Error while connecting to MongoDB:", error.message);
+  }
 
 }
 
