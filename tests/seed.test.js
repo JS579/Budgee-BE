@@ -1,5 +1,7 @@
 const fastify = require("fastify");
-const connectDatabase = require("../db/connection"); 
+const connectDatabase = require("../db/connection");
+const seed = require("../db/seeds/seed") 
+const testData = require("../db/data/test_data/index")
 
 describe("MongoDB connection", () => {
   let app;
@@ -8,6 +10,10 @@ describe("MongoDB connection", () => {
     app = fastify();
     await connectDatabase(app);
   });
+
+  beforeEach(async () =>
+    seed(testData)
+)
 
        afterAll(async () => {
     await app.mongo.client.close();
