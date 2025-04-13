@@ -413,7 +413,8 @@
     "start": "fastify start -l info app.js",
     "seed-dev": "node ./db/seeds/run-seed.js",
     "seed-test": "jest seed.test.js",
-    "dev": "nodemon listener.js"
+    "dev": "fastify start -w -l info -P app.js",
+    "nodemon": "nodemon listener.js"
   },
   "repository": {
     "type": "git",
