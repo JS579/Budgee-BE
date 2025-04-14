@@ -1,5 +1,5 @@
 const fastify = require("fastify");
-const connectDatabase = require("../db/connection");
+const {dbConnection} = require("../db/connection");
 const seed = require("../db/seeds/seed");
 const testData = require("../db/data/test_data/index");
 
@@ -18,7 +18,7 @@ describe("MongoDB connection", () => {
     expensesCollection = () => app.mongo.db.collection("expenses");
     coloursCollection = () => app.mongo.db.collection("colours");
     categoriesCollection = () => app.mongo.db.collection("categories");
-    await connectDatabase(app);
+    await dbConnection(app);
   });
 
   beforeEach(async () => {
