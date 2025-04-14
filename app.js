@@ -2,6 +2,7 @@
 
 const path = require('node:path')
 const AutoLoad = require('@fastify/autoload')
+const expensesRoutes = require("./routes/ExpensesRoutes")
 
 // Pass --options via CLI arguments in command to enable these options.
 const options = {}
@@ -9,7 +10,7 @@ const options = {}
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
 
-  
+  fastify.register(expensesRoutes)
 
   // Do not touch the following lines
 
@@ -23,10 +24,10 @@ module.exports = async function (fastify, opts) {
 
   // This loads all plugins defined in routes
   // define your routes in one of these
-  fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'routes'),
-    options: Object.assign({}, opts)
-  })
+//   fastify.register(AutoLoad, {
+//     dir: path.join(__dirname, 'routes'),
+//     options: Object.assign({}, opts)
+//   })
 }
 
 module.exports.options = options

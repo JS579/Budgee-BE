@@ -1,14 +1,19 @@
 const Expenses = require("../models/expensesModels")
+const getExpenses = require("../services/expensesService")
 
-async function getAllExpenses(request, response){
+console.log(getExpenses)
+
+async function getAllExpenses(request, reply){
 try {
-    let allExpenses = await Expenses.find()
-    return allExpenses
+    const allExpenses = await Expenses.find()
+    
+    reply.send(allExpenses)
 } catch (error) {
-    console.log(error)
+    reply.code(500).send({error: error.message})
 }
 }
 
 
 
-module.exports = { getAllExpenses }
+
+module.exports = getAllExpenses 
