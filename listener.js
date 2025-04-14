@@ -1,8 +1,9 @@
+const { dbConnection } = require('./db/connection')
 
 const fastify = require('fastify')({
   logger: true
 })
-fastify.register(require("./db/connection"))
+fastify.register(dbConnection)
 
 fastify.register(require("./app"))
 
