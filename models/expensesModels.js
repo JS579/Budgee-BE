@@ -12,5 +12,3 @@ const expensesSchema = new Schema(
 )
 
 module.exports = mongoose.model("Expenses", expensesSchema)
-
-// "mongodb://localhost:27017/BudgeeDB"

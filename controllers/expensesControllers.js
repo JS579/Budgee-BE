@@ -1,5 +1,4 @@
 const Expenses = require("../models/expensesModels")
-const getExpenses = require("../services/expensesService")
 
 async function getAllExpenses(request, reply){
 try {
