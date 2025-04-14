@@ -20,6 +20,16 @@ async function getExpenseById(request, reply) {
     }
 }
 
+async function addNewExpense(request, reply) {
+    try {
+        const expense = new Expenses(request.body)
+        const expenseAdded = await expense.save()
+        return expenseAdded
+    } catch (error) {
+        reply.code(500).send({ error: error.message })
+    }
+}
 
 
-module.exports = { getAllExpenses, getExpenseById }
+
+module.exports = { getAllExpenses, getExpenseById, addNewExpense }

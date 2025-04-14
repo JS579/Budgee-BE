@@ -4,13 +4,21 @@ const { Schema } = mongoose
 
 const expensesSchema = new Schema(
     {
+        date: {
+            type: String,
+            required: true,
+        },
+        
         amount: {
             type: Number,
+            required: true,
+        },
+
+        description: {
+            type: String,
             required: true,
         }
 }
 )
 
 module.exports = mongoose.model("Expenses", expensesSchema)
-
-// "mongodb://localhost:27017/BudgeeDB"
