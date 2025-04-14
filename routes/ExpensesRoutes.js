@@ -1,14 +1,11 @@
 'use strict'
-const getAllExpenses = require("../controllers/expensesControllers")
+const { getAllExpenses, getExpenseById } = require("../controllers/expensesControllers")
 
-module.exports = async function (fastify, opts) {
-  fastify.get('/', async function (request, reply) {
-    return { root: true }
-  })
-}
+
 const expensesRoutes = async (fastify, opts) => {
   fastify.get('/expenses', getAllExpenses)
+  fastify.get('/expenses/:id', getExpenseById)
 }
 
 
-module.exports = expensesRoutes 
+module.exports = expensesRoutes
