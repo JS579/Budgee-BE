@@ -1,5 +1,5 @@
 const Fastify = require("fastify");
-const connectDatabase = require("../connection");
+const { dbConnection } = require("../connection");
 
 const seed = async ({
   budgetsData,
@@ -10,7 +10,7 @@ const seed = async ({
 }) => {
   try {
     const fastify = Fastify({logger: true});
-    await connectDatabase(fastify);
+    await dbConnection(fastify);
     const db = fastify.mongo.client.db();
 
     const usersCol = db.collection("users");
@@ -65,10 +65,8 @@ const seed = async ({
     await expensesCol.insertMany(expensesWithBudgetAndCategoryIds);
 
     console.log("Database seeded successfully");
-    process.exit(0);
   } catch (err) {
     console.error("Seeding error:", err);
-    process.exit(1);
   }
 };
 

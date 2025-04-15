@@ -15,8 +15,8 @@ async function connectDatabase(fastify, options) {
   } catch (error) {
     console.error("Error while connecting to MongoDB:", error.message);
   }
-
 }
 
+const dbConnection = fastifyPlugin(connectDatabase)
 
-module.exports = fastifyPlugin(connectDatabase)
+module.exports = { dbConnection, uri }
