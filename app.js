@@ -10,9 +10,18 @@ const expensesRoutes = require("./routes/ExpensesRoutes");
 const budgetRoutes = require("./routes/budgetRoutes")
 const coloursRoutes = require("./routes/colourRoutes")
 
+const path = require('node:path')
+const AutoLoad = require('@fastify/autoload')
+
+const {uri} = require("./db/connection")
+const mongoose = require('mongoose')
+const usersRoutes = require("./routes/UsersRoutes")
 
 // Pass --options via CLI arguments in command to enable these options.
 const options = {};
+const options = {}
+
+console.log("uri>>>", uri)
 
 mongoose.connect(uri, {bufferCommands: false});
 
@@ -27,6 +36,8 @@ module.exports = async function (fastify, opts) {
 
 
     // Do not touch the following lines
+ 
+  fastify.register(usersRoutes)
 
     // This loads all plugins defined in plugins
     // those should be support plugins that are reused
@@ -49,4 +60,9 @@ module.exports = async function (fastify, opts) {
 };
 
 module.exports.options = options;
+  fastify.register(AutoLoad, {
+    dir: path.join(__dirname, 'plugins'),
+    options: Object.assign({}, opts)
+  })
+}
 
