@@ -10,6 +10,6 @@ fastify.patch('/users/:id',updateUser)
 fastify.delete('/users/:id',deleteUser)
 }
 
-exports.default = userRoutes
+module.exports = userRoutes
   
 
