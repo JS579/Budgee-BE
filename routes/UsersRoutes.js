@@ -1,12 +1,12 @@
 'use strict'
-const {getAllUsers} = require("../controllers/usersControllers")
 
-module.exports = async function (fastify, opts) {
-  fastify.get('/', async function (request, reply) {
-    return { root: true }
-  })
+const { getAllUsers } = require("../controllers/usersControllers")
 
-
+async function userRoutes(fastify){
   fastify.get('/users', getAllUsers)
-};
+
+}
+
+exports.default = userRoutes
+  
 

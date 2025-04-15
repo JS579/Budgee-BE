@@ -18,4 +18,5 @@ async function connectDatabase(fastify, options) {
 
 }
 
+
 module.exports = fastifyPlugin(connectDatabase)

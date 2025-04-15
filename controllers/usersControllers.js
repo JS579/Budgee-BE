@@ -1,8 +1,10 @@
+const User =  require('../models/usersModels')
 
-
-const userService = require('../services/userService');
-
-exports.getAllUsers = async (req, reply) => {
-  const users = await userService.getAllUsers();
-  reply.send(users);
+exports.getAllUsers = async (request, reply) => {
+  try{
+  const users = await User.find();
+  reply.code(200).send(users);
+} catch (error) {
+  reply.code(500).send({ error: 'Internal Server Error', message: error.message });
+}
 };
