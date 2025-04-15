@@ -1,9 +1,13 @@
 const Category = require("../models/categoryModel");
-const {createCategory, modifyCategory} = require("../services/categoryService");
+const {
+  createCategory,
+  modifyCategory,
+  getCategoriesWithTotalPrice,
+} = require("../services/categoryService");
 
 async function getAllCategories(request, reply) {
   try {
-    const allCategories = await Category.find();
+    const allCategories = await getCategoriesWithTotalPrice();
     reply.code(200).send(allCategories);
   } catch (error) {
     reply.code(500).send({error: error.message});
