@@ -4,19 +4,20 @@ const {fetchExpensesByCategoryId} = require("../services/expensesService");
 async function getCategoriesWithTotalPrice() {
   const categories = await Category.find();
 
+  const addTotalPriceToCategory = async (category) => {
+    const expenses = await fetchExpensesByCategoryId(category._id);
+    const total_price = expenses.reduce(
+      (sum, expense) => sum + (expense.amount || 0), 0);
+    return {
+      ...category.toObject(),
+      total_price,
+    };
+  };
+
   const categoriesWithTotalPrice = await Promise.all(
-    categories.map(async (category) => {
-      const expenses = await fetchExpensesByCategoryId(category._id);
-      const total_price = expenses.reduce(
-        (sum, expense) => sum + (expense.amount || 0),
-        0
-      );
-      return {
-        ...category.toObject(),
-        total_price,
-      };
-    })
+    categories.map(addTotalPriceToCategory)
   );
+
   return categoriesWithTotalPrice;
 }
 
