@@ -19,4 +19,4 @@ async function connectDatabase(fastify, options) {
 
 const dbConnection = fastifyPlugin(connectDatabase)
 
-module.exports = { dbConnection, uri }
+module.exports = { dbConnection, uri, connectDatabase }
