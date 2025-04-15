@@ -36,5 +36,20 @@ async function patchCategory(request, reply) {
   }
 }
 
-module.exports = {getAllCategories, postCategory, patchCategory};
+async function deleteCategory(request, reply) {
+  try {
+    const {category_id} = request.params;
+    await Category.findByIdAndDelete(category_id);
+    reply.code(204).send(category_id);
+  } catch (error) {
+    reply.code(404).send({error: error.message});
+  }
+}
+
+module.exports = {
+  getAllCategories,
+  postCategory,
+  patchCategory,
+  deleteCategory,
+};
 
