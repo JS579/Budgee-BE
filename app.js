@@ -2,10 +2,11 @@
 
 const path = require('node:path')
 const AutoLoad = require('@fastify/autoload')
-const expensesRoutes = require("./routes/ExpensesRoutes")
 const {uri} = require("./db/connection")
 const mongoose = require('mongoose')
 const categoriesRoutes = require("./routes/categoriesRoutes")
+const root = require("./routes/root")
+const expensesRoutes = require("./routes/ExpensesRoutes")
 
 // Pass --options via CLI arguments in command to enable these options.
 const options = {}
@@ -18,6 +19,8 @@ module.exports = async function (fastify, opts) {
     await mongoose.connect(uri, { bufferCommands: false });
     fastify.register(expensesRoutes)
     fastify.register(categoriesRoutes)
+  fastify.register(root)
+  fastify.register(expensesRoutes)
 
     // Do not touch the following lines
 
