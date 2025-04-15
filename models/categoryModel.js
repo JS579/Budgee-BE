@@ -15,7 +15,10 @@ const categorySchema = new Schema(
       ref: "Colour",
       required: true,
     },
-  }
+  },
+   {
+      versionKey: false,
+    }
 );
 
 const Category = mongoose.model("Category", categorySchema);
