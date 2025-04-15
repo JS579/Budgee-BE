@@ -1,10 +1,8 @@
-// const users = require('../models/usersModels');
-// exports.fetchAllUsers = async () => {
-//   try{
-//     const userList =await users.find();
-//   return userList
-// }catch(error){
-//   throw new error('error fetching users: ' + error.message)
-// }
+// const Users = require('../models/usersModels');
+// exports.updateUserById = async (id,data) => {
+//  return await Users.findByIdAndUpdate(id,data,{new:true})
 
+// }
+// exports.fetchUserById = async(id)=>{
+//   return await usersModels.findById(id);
 // }

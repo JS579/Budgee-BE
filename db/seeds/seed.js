@@ -65,6 +65,7 @@ const seed = async ({
     await expensesCol.insertMany(expensesWithBudgetAndCategoryIds);
 
     console.log("Database seeded successfully");
+    await fastify.close();
   } catch (err) {
     console.error("Seeding error:", err);
   }
