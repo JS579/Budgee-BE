@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const categoriesRoutes = require("./routes/categoriesRoutes");
 const root = require("./routes/root");
 const expensesRoutes = require("./routes/ExpensesRoutes");
+const budgetRoutes = require("./routes/budgetRoutes")
 
 // Pass --options via CLI arguments in command to enable these options.
 const options = {};
@@ -19,6 +20,7 @@ module.exports = async function (fastify, opts) {
     fastify.register(root);
     fastify.register(expensesRoutes);
     fastify.register(categoriesRoutes);
+    fastify.register(budgetRoutes);
 
     // Do not touch the following lines
 
