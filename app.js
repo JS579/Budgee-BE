@@ -20,7 +20,7 @@ module.exports = async function (fastify, opts) {
     fastify.register(expensesRoutes)
     fastify.register(categoriesRoutes)
   fastify.register(root)
-  fastify.register(expensesRoutes)
+
 
     // Do not touch the following lines
 
