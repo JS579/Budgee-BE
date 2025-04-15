@@ -1,16 +1,38 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
-
+const mongoose = require("mongoose");
+const {Schema} = mongoose;
 
 const expensesSchema = new Schema(
-    {
-        amount: {
-            type: Number,
-            required: true,
-        }
-}
-)
+  {
+    date: {
+      type: Date,
+      required: true,
+    },
 
-module.exports = mongoose.model("Expenses", expensesSchema)
+    amount: {
+      type: Number,
+      required: true,
+    },
 
-// "mongodb://localhost:27017/BudgeeDB"
+    description: {
+      type: String,
+      required: true,
+    },
+
+    category_id: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+
+    budget_id: {
+      type: Schema.Types.ObjectId,
+      ref: "Budget",
+      required: true,
+    },
+  },
+  {
+    versionKey: false,
+  }
+);
+
+module.exports = mongoose.model("Expenses", expensesSchema);
