@@ -1,7 +1,4 @@
-const fastify = require("fastify");
-const {dbConnection} = require("../db/connection");
-const seed = require("../db/seeds/seed");
-const testData = require("../db/data/test_data/index");
+const getApp = require("./tests.setup");
 
 describe("MongoDB connection", () => {
   let app;
@@ -12,25 +9,14 @@ describe("MongoDB connection", () => {
   let categoriesCollection;
 
   beforeAll(async () => {
-    app = fastify();
+    app = getApp();
     budgetsCollection = () => app.mongo.db.collection("budgets");
     usersCollection = () => app.mongo.db.collection("users");
     expensesCollection = () => app.mongo.db.collection("expenses");
     coloursCollection = () => app.mongo.db.collection("colours");
     categoriesCollection = () => app.mongo.db.collection("categories");
-    await dbConnection(app);
   });
 
-  beforeEach(async () => {
-    await seed(testData);
-  });
-
-  afterAll(async () => {
-    if (app.mongo?.client) {
-      await app.mongo.client.close();
-    }
-    await app.close();
-  });
 
   describe("checking connection", () => {
     test("should connect to MongoDB", () => {
