@@ -1,11 +1,16 @@
-const {getAllCategories, postCategory} = require("../controllers/categoriesController")
+const {
+  getAllCategories,
+  postCategory,
+  patchCategory,
+} = require("../controllers/categoriesController");
 
 const categoriesRoutes = async (fastify, opts) => {
     fastify.get("/categories", getAllCategories);
     fastify.post("/categories", postCategory);
-    // fastify.patch("/categories", patchCategory)
+    fastify.patch("/categories/:category_id", patchCategory)
     // fastify.delete("/categories", deleteCategory);
 };
+
 
 
 

@@ -1,13 +1,13 @@
-const Category = require("../models/categoryModel")
-const {createCategory} = require("../services/categoryService");
+const Category = require("../models/categoryModel");
+const {createCategory, modifyCategory} = require("../services/categoryService");
 
-async function getAllCategories(request, reply){
-try {
-    const allCategories = await Category.find()
+async function getAllCategories(request, reply) {
+  try {
+    const allCategories = await Category.find();
     reply.code(200).send(allCategories);
-} catch (error) {
-    reply.code(500).send({error: error.message})
-}
+  } catch (error) {
+    reply.code(500).send({error: error.message});
+  }
 }
 
 async function postCategory(request, reply) {
@@ -21,7 +21,20 @@ async function postCategory(request, reply) {
   }
 }
 
+async function patchCategory(request, reply) {
+  try {
+    const {category_id} = request.params;
+    const {name, description, colour_id} = request.body;
+    const updatedCategory = await modifyCategory(category_id, {
+      name,
+      description,
+      colour_id,
+    });
+    reply.code(200).send(updatedCategory);
+  } catch (error) {
+    reply.code(400).send({error: error.message});
+  }
+}
 
+module.exports = {getAllCategories, postCategory, patchCategory};
 
-
-module.exports = {getAllCategories, postCategory}
