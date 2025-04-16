@@ -3,11 +3,11 @@
 const { getAllUsers,getUserById,updateUser,createUser,deleteUser } = require("../controllers/usersControllers")
 
 async function userRoutes(fastify){
-  fastify.get('/users', getAllUsers)
-  fastify.get('/users/:id', getUserById);
-  fastify.post('/users',createUser)
-fastify.patch('/users/:id',updateUser)
-fastify.delete('/users/:id',deleteUser)
+  fastify.get('/api/users', getAllUsers)
+  fastify.get('/api/users/:id', getUserById);
+  fastify.post('/api/users',createUser)
+  fastify.patch('/api/users/:id',updateUser)
+  fastify.delete('/api/users/:id',deleteUser)
 }
 
 module.exports = userRoutes
