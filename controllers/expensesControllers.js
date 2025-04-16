@@ -1,5 +1,4 @@
 const Budgets = require("../models/budgetModel");
-
 const Expenses = require("../models/expensesModels");
 const {
   fetchExpensesByBudgetIdAndCategoryId,
@@ -78,12 +77,21 @@ async function addNewExpense(request, reply) {
 
 async function updateExpense(request, reply) {
   try {
-    const expense = await Expenses.findByIdAndUpdate(
+
+    if(request.body.amount){
+    const expense = await Expenses.findById(request.params.id)
+    const budget = await Budgets.findById(expense.budget_id)
+    const difference = expense.amount - request.body.amount
+    budget.remaining += difference
+    await budget.save()
+    }
+
+    const updatedExpense = await Expenses.findByIdAndUpdate(
       request.params.id,
       request.body,
       {new: true}
     );
-    return expense;
+    return updatedExpense;
   } catch (error) {
     reply.status(500).send({error: error.message});
   }
@@ -91,6 +99,12 @@ async function updateExpense(request, reply) {
 
 async function deleteExpense(request, reply) {
   try {
+
+  const expense = await Expenses.findById(request.params.id)
+  const budget = await Budgets.findById(expense.budget_id)
+  budget.remaining += expense.amount
+  await budget.save()
+
     await Expenses.findByIdAndDelete(request.params.id);
     reply.status(204);
   } catch (error) {
