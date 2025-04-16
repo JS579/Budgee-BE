@@ -27,10 +27,7 @@ const seed = async ({
       coloursCol.deleteMany({}),
     ]);
 
-    console.log("Collections cleared");
-
     const {insertedIds: colourIds} = await coloursCol.insertMany(coloursData);
-    console.log("Seeded colours");
 
     const categoriesWithColourIds = categoriesData.map((category, index) => ({
       ...category,
@@ -40,10 +37,8 @@ const seed = async ({
     const {insertedIds: categoryIds} = await categoriesCol.insertMany(
       categoriesWithColourIds
     );
-    console.log("Seeded categories");
 
     await usersCol.insertMany(usersData);
-    console.log("Seeded users");
 
     const budgetsWithUsernames = budgetsData.map((budget, index) => ({
       ...budget,
@@ -53,7 +48,6 @@ const seed = async ({
     const {insertedIds: budgetIds} = await budgetsCol.insertMany(
       budgetsWithUsernames
     );
-    console.log("Seeded budgets");
 
     const expensesWithBudgetAndCategoryIds = expensesData.map((expense, index) => ({
       ...expense,
