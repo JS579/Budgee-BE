@@ -11,7 +11,7 @@ exports.getUserById = async(request,reply)=>{
  
   try{
     const user = await User.findById(request.params.id);
-    r
+    
   if(!user){
      reply.code(404).send({message:'User not found'});
     }
@@ -26,9 +26,7 @@ exports.getUserById = async(request,reply)=>{
   exports.createUser = async (request, reply) => {
     try{
       const{username,name,email}= request.body;
-      if (!username || !name || !email) {
-        return reply.code(400).send({ error: 'Bad Request', message: 'All fields are required.' });
-      }
+
       const existedUsername =await User.findOne({username})
       if(existedUsername){
         return reply.code(400).send({error:'Bad Request',message:'username already taken.'})

@@ -5,9 +5,9 @@ const {
 } = require("../controllers/colourControllers");
 
 const coloursRoutes = async (fastify, opts) => {
-  fastify.get("/colours", getColours);
-  fastify.post("/colours", postColour);
-  fastify.delete("/colours/:colour_id", deleteColour);
+  fastify.get("/api/colours", getColours);
+  fastify.post("/api/colours", postColour);
+  fastify.delete("/api/colours/:colour_id", deleteColour);
 };
 
 module.exports = coloursRoutes;
