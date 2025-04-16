@@ -1,3 +1,5 @@
+const Budgets = require("../models/budgetModel");
+
 const Expenses = require("../models/expensesModels");
 const {
   fetchExpensesByBudgetIdAndCategoryId,
@@ -38,13 +40,41 @@ async function getExpensesByCategoryId(request, reply) {
 
 async function addNewExpense(request, reply) {
   try {
-    const expense = new Expenses(request.body);
-    const expenseAdded = await expense.save();
-    return expenseAdded;
+    const { budget_id, amount } = request.body;
+
+    if (!budget_id || amount === undefined) {
+      return reply.status(400).send({ error: "budget_id and amount are required" });
+    }
+    const numericAmount = Number(amount);
+    if (isNaN(numericAmount)) {
+      return reply.status(400).send({ error: "Amount must be a number" });
+    }
+    const budget = await Budgets.findById(budget_id);
+    if (!budget) {
+      return reply.status(404).send({ error: "Budget not found" });
+    }
+   if (isNaN(budget.remaining)) {
+      budget.remaining = 0; 
+    }
+   if (numericAmount > budget.remaining) {
+      return reply.status(400).send({ error: "Insufficient remaining budget" });
+    }
+   budget.remaining -= numericAmount;
+    await budget.save();
+
+    const expense = new Expenses({
+      ...request.body,
+      amount: numericAmount
+      
+    });
+     const expenseAdded = await expense.save();
+    return reply.status(201).send(expenseAdded);
   } catch (error) {
-    reply.status(500).send({error: error.message});
+    reply.status(500).send({ error: error.message });
   }
 }
+
+
 
 async function updateExpense(request, reply) {
   try {
