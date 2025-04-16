@@ -1,0 +1,147 @@
+{
+    "GET /api": {
+      "description": "serves up a json representation of all the available endpoints of the api"
+    },
+
+    "GET /api/budgets": {
+      "description": "serves an array of all the budgets",
+      "queries": [],
+      "exampleResponse": {
+        "budgets": [{ "_id": "67fe770f593bab21ec928d6b", "budget": 2400, "start_date": "2024-11-01T00:00:00.000Z", "end_date": "2024-11-29T00:00:00.000Z", "username": "lisa Oliver", "remaining": 2400 }]
+      }
+    },
+
+    "GET /api/budgets/:id": {
+      "description": "serves an object of the budget with the requested id",
+      "queries": [],
+      "exampleResponse": { "_id":"67fe770f593bab21ec928d6b", "budget":2400,"start_date":"2024-11-01T00:00:00.000Z", "end_date":"2024-11-29T00:00:00.000Z", "username":"lisa Oliver", "remaining": 2400}
+    },
+
+    "POST /api/budgets": {
+      "description": "adds a new budget",
+      "queries": [],
+      "exampleRequestBody": { "budget": 1500, "start_date": "2023-05-01", "end_date": "2023-05-29", "username": "lisa Oliver" }
+    },
+    
+    "PATCH /api/budgets/:id": {
+      "description": "udates and existing budget",
+      "queries": [],
+      "exampleRequestBody": { "budget": 1500 }
+    },
+  
+    "DELETE /api/budgets/:id": {
+      "description": "removes a budget",
+      "queries": [],
+      "exampleResponse": []
+    }, 
+
+    "GET /api/expenses": {
+      "description": "serves an array of all the expenses",
+      "queries": [],
+      "exampleResponse": [{ "_id": "67fe770f593bab21ec928d72", "date": "2025-01-12T00:00:00.000Z", "amount": 900, "description": "paying rent,morgage", "category_id": "67fe770e593bab21ec928d62", "budget_id": "67fe770f593bab21ec928d6c" }]
+    },
+
+    "GET /api/expenses/category/:category_id": {
+      "description": "serves an array of the expenses with a requested category id",
+      "queries": [],
+      "exampleResponse": [{ "_id":"67fe770f593bab21ec928d75", "date":"2024-08-11T00:00:00.000Z", "amount":150, "description":"Expenses of health", "category_id":"67fe770e593bab21ec928d65", "budget_id":"67fe770f593bab21ec928d6f" }]
+    },
+
+    "GET /api/expenses/:budget_id/:category_id": {
+      "description": "serves an array of the expenses with a requested budget id and category id",
+      "queries": [],
+      "exampleResponse": [{ "_id":"67fe770f593bab21ec928d75", "date":"2024-08-11T00:00:00.000Z", "amount":150, "description":"Expenses of health", "category_id":"67fe770e593bab21ec928d65", "budget_id":"67fe770f593bab21ec928d6f" }]
+  },
+
+    "POST /api/expenses": {
+      "description": "adds a new expense",
+      "queries": [],
+      "exampleRequestBody": { "date":"2024-08-11", "amount":150, "description":"Expenses of health", "category_id":"67fe770e593bab21ec928d65", "budget_id":"67fe770f593bab21ec928d6f" }
+    },
+
+    "PATCH /api/expenses/:id": {
+        "description": "updates an existing expense",
+        "queries": [],
+        "exampleRequestBody": { "amount":150 }
+      },
+
+    "DELETE /api/expenses/:id": {
+        "description": "removes an expense",
+        "queries": [],
+        "exampleResponse": []
+      },
+
+    "GET /api/categories": {
+        "description": "serves an array of all the categories",
+        "queries": [],
+        "exampleResponse": [
+            { "_id": "67fe770e593bab21ec928d61", "name": "Housing", "description": "This includes everything from rent or mortgage payments to property taxes, HOA dues, and home maintenance costs.", "total_price": 350, "colour_id": "67fe770e593bab21ec928d5c" }]
+        },
+    
+    "POST /api/categories": {
+        "description": "adds a new category",
+        "queries": [],
+        "exampleRequestBody": { "name": "Housing", "description": "Rent, mortgage payments and property taxes.", "colour_id": "67fe770e593bab21ec928d5c" }
+    },
+
+    "PATCH /api/categories/:category_id": {
+        "description": "updates an existing category",
+        "queries": [],
+        "exampleRequestBody": { "description": "Rent/mortgage payments, property taxes and home maintenance costs." }
+    },
+
+    "DELETE /api/categories/:category_id": {
+        "description": "removes a category",
+        "queries": [],
+        "exampleResponse": []
+    },
+
+    "GET /api/users": {
+        "description": "serves an array of all the users",
+        "queries": [],
+        "exampleResponse": [ { "username": "lukkaku9", "name": "Jony", "email": "jony@gmail.com", "avatar": "https://randomuser.me/api/portraits/men/1.jpg", "preferences": ["notifications", "dark_mode"] } ] 
+    },
+
+    "GET /api/users/:id": {
+        "description": "serves an object of the user with the requested id",
+        "queries": [],
+        "exampleResponse":  { "username": "lukkaku9", "name": "Jony", "email": "jony@gmail.com", "avatar": "https://randomuser.me/api/portraits/men/1.jpg", "preferences": ["notifications", "dark_mode"] }
+    },
+
+    "POST /api/users": {
+        "description": "adds a new user",
+        "queries": [],
+        "exampleRequestBody": { "username": "john73", "name": "max", "email": "max@gmail.com", "avatar": "https://randomuser.me/api/portraits/men/1.jpg", "preferences": ["dark_mode"] }
+    },
+
+    "PATCH /api/users/:id": {
+        "description": "updates and existing user",
+        "queries": [],
+        "exampleRequestBody": { "email": "max89@gmail.com" }
+    },
+
+    "DELETE /api/users/:id": {
+        "description": "removes a user",
+        "queries": [],
+        "exampleResponse": []
+    },
+
+    "GET /api/colours": {
+        "description": "serves an array of all the colours",
+        "queries": [],
+        "exampleResponse": [{ "_id":"67fe770e593bab21ec928d5c", "name":"Purple", "hex_code":"#800080" }]
+    },
+
+    "POST /api/colours": {
+        "description": "adds a new colour",
+        "queries": [],
+        "exampleRequestBody": { "name": "Blue", "hex_code": "#0000FF" }
+    },
+
+    "DELETE /api/colours/:colour_id": {
+        "description": "removes a colour",
+        "queries": [],
+        "exampleResponse": []
+    }
+
+}
