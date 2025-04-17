@@ -35,4 +35,4 @@ const budgetSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Budgets", budgetSchema);
+module.exports = mongoose.model("Budget", budgetSchema);

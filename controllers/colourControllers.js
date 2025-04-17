@@ -4,7 +4,7 @@ const {createColour} = require("../services/colourServices");
 async function getColours(request, reply) {
   try {
     const colours = await Colour.find();
-    reply.code(200).send(colours);
+    reply.code(200).send({colours});
   } catch (error) {
     reply.code(400).send({error: error.message});
   }

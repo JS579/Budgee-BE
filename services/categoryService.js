@@ -31,13 +31,12 @@ async function createCategory({name, description, colour_id}) {
     name,
     description,
     colour_id,
-    total_price: 0, // Initialize total_price to 0
+    total_price: 0,
   });
   return await newCategory.save();
 }
 
 async function modifyCategory(category_id, {name, description, colour_id}) {
-  // Validate data types
   if (name !== undefined && typeof name !== "string") {
     throw Object.assign(new Error("Bad Request: Invalid data type"), {
       statusCode: 400,
