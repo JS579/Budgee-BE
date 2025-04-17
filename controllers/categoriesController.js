@@ -2,12 +2,12 @@ const Category = require("../models/categoryModel");
 const {
   createCategory,
   modifyCategory,
-  getCategoriesWithTotalPrice,
+  getCategoriesWithTotalAmount,
 } = require("../services/categoryService");
 
 async function getAllCategories(request, reply) {
   try {
-    const categories = await getCategoriesWithTotalPrice();
+    const categories = await getCategoriesWithTotalAmount();
     reply.code(200).send({categories});
   } catch (error) {
     reply.code(500).send({msg: error.message});
@@ -64,6 +64,7 @@ module.exports = {
   patchCategory,
   deleteCategory,
 };
+
 
 
 

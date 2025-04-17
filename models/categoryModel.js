@@ -15,7 +15,7 @@ const categorySchema = new Schema(
       ref: "Colour",
       required: true,
     },
-    total_price: {type: Number, default: 0},
+    total_amount: {type: Number, default: 0},
   },
   {
     versionKey: false,
