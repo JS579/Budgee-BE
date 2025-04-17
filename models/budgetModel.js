@@ -35,11 +35,4 @@ const budgetSchema = new Schema(
   }
 );
 
-budgetSchema.pre("save", function (next) {
-  if (this.isNew && this.remaining === undefined) {
-    this.remaining = this.budget;
-  }
-  next();
-});
-
 module.exports = mongoose.model("Budgets", budgetSchema);
