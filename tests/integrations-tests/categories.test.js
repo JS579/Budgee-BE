@@ -1,7 +1,7 @@
 const getApp = require("../tests.setup");
 const request = require("supertest");
 
-describe("ENDPOINT: /categories", () => {
+describe("ENDPOINT: /api/categories", () => {
   let app;
   let categoriesCollection;
   let coloursCollection;
@@ -12,35 +12,36 @@ describe("ENDPOINT: /categories", () => {
     coloursCollection = await app.mongo.db.collection("colours");
   });
 
-  describe("GET: /categories", () => {
+  describe("GET: /api/categories", () => {
     test("Returns an array of all categories", async () => {
       const {
         body: {categories},
-      } = await request(app.server).get("/categories").expect(200);
+      } = await request(app.server).get("/api/categories").expect(200);
 
       expect(categories.length).not.toBe(0);
       categories.forEach((category) => {
         expect(category).toHaveProperty("_id");
         expect(category).toHaveProperty("name");
         expect(category).toHaveProperty("description");
-        expect(category).toHaveProperty("total_price");
+        expect(category).toHaveProperty("total_amount");
         expect(category).toHaveProperty("colour_id");
       });
     });
   });
 
-  describe("POST: /categories", () => {
+  describe("POST: /api/categories", () => {
     test("Responds with 201 when a category is created successfully", async () => {
       const newCategory = {
         name: "New Category",
         description: "A description of the new category.",
         colour_id: "67fd32601e7b6b598dc0077e",
+        total_amount: 0
       };
 
       const {
         body: {newCategory: createdCategory},
       } = await request(app.server)
-        .post("/categories")
+        .post("/api/categories")
         .send(newCategory)
         .expect(201);
 
@@ -49,7 +50,7 @@ describe("ENDPOINT: /categories", () => {
       expect(createdCategory.description).toBe(
         "A description of the new category."
       );
-      expect(createdCategory.total_price).toBe(0);
+      expect(createdCategory.total_amount).toBe(0);
       expect(createdCategory.colour_id).toBe("67fd32601e7b6b598dc0077e");
     });
 
@@ -58,7 +59,7 @@ describe("ENDPOINT: /categories", () => {
       const {
         body: {msg},
       } = await request(app.server)
-        .post("/categories")
+        .post("/api/categories")
         .send(incompleteCategory)
         .expect(400);
 
@@ -66,7 +67,7 @@ describe("ENDPOINT: /categories", () => {
     });
   });
 
-  describe("PATCH: /categories/:category_id", () => {
+  describe("PATCH: /api/categories/:category_id", () => {
     test("Responds with 200 and updates category details successfully", async () => {
       const categoryToUpdate = await app.mongo.db
         .collection("categories")
@@ -81,7 +82,7 @@ describe("ENDPOINT: /categories", () => {
       const {
         body: {updatedCategory},
       } = await request(app.server)
-        .patch(`/categories/${categoryToUpdate._id.toString()}`)
+        .patch(`/api/categories/${categoryToUpdate._id.toString()}`)
         .send(updatedCategoryData)
         .expect(200);
 
@@ -102,7 +103,7 @@ describe("ENDPOINT: /categories", () => {
       const {
         body: {msg},
       } = await request(app.server)
-        .patch(`/categories/${categoryToUpdate._id.toString()}`)
+        .patch(`/api/categories/${categoryToUpdate._id.toString()}`)
         .send(invalidUpdatedCategoryData)
         .expect(400);
 
@@ -113,7 +114,7 @@ describe("ENDPOINT: /categories", () => {
       const {
         body: {msg},
       } = await request(app.server)
-        .patch("/categories/67fd32601e7b6b598dc0077e")
+        .patch("/api/categories/67fd32601e7b6b598dc0077e")
         .send({name: "Nonexistent Category"})
         .expect(404);
 
@@ -121,13 +122,13 @@ describe("ENDPOINT: /categories", () => {
     });
   });
 
-  describe("DELETE: /categories/:category_id", () => {
+  describe("DELETE: /api/categories/:category_id", () => {
     test("Responds with 200 and deletes the category", async () => {
       const categoryToBeDeleted = await app.mongo.db
         .collection("categories")
         .findOne({});
       await request(app.server)
-        .delete(`/categories/${categoryToBeDeleted._id.toString()}`)
+        .delete(`/api/categories/${categoryToBeDeleted._id.toString()}`)
         .expect(204);
     });
 
@@ -135,7 +136,7 @@ describe("ENDPOINT: /categories", () => {
       const {
         body: {msg},
       } = await request(app.server)
-        .delete("/categories/67fd32601e7b6b598dc0077e")
+        .delete("/api/categories/67fd32601e7b6b598dc0077e")
         .expect(404);
 
       expect(msg).toBe("Category not found");
@@ -403,4 +404,18 @@ describe("ENDPOINT: /categories", () => {
 //     });
 //   });
 // });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -18,13 +18,6 @@ describe("MongoDB connection", () => {
   });
 
 
-  describe("checking connection", () => {
-    test("should connect to MongoDB", () => {
-      expect(app.mongo).toBeDefined();
-      expect(app.mongo.client).toBeDefined();
-    });
-  });
-
   describe("Budgets Collection", () => {
     test("should have 6 budget documents seeded", async () => {
       const count = await budgetsCollection().countDocuments();

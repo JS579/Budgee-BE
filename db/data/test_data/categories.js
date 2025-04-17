@@ -1,32 +1,33 @@
 module.exports = [
   {
+    name: "Housing",
+    description: "Rent, mortgage, property taxes, home maintenance",
+    total_amount: 1350, 
+  },
+  {
     name: "Food",
-    description: "Expenses for groceries and dining out",
-    total_amount: 0,
-  },
-  {
-    name: "Transportation",
-    description: "Fuel, public transport, etc.",
-    total_amount: 0,
-  },
-  {
-    name: "Entertainment",
-    description: "Movies, games, subscriptions",
-    total_amount: 0,
+    description: "Groceries, dining out, snacks",
+    total_amount: 130, 
   },
   {
     name: "Utilities",
-    description: "Electricity, water, and internet bills",
-    total_amount: 0,
+    description: "Electricity, water, internet, phone",
+    total_amount: 210, 
   },
   {
-    name: "Shopping",
-    description: "Clothing and accessories",
-    total_amount: 0,
+    name: "Personal Care",
+    description: "Haircuts, toiletries, gym",
+    total_amount: 75,
+  },
+  {
+    name: "Gifts",
+    description: "Birthdays, holidays, donations",
+    total_amount: 50, 
+  },
+  {
+    name: "Education",
+    description: "Books, courses, school supplies",
+    total_amount: 120,
   },
 ];
-
-
-
-
 

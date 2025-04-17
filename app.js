@@ -6,9 +6,6 @@ const {uri} = require("./db/connection");
 const mongoose = require("mongoose");
 const { root, categoriesRoutes, expensesRoutes, budgetRoutes, coloursRoutes, userRoutes} = require("./routes/indexRoutes")
 
-// Pass --options via CLI arguments in command to enable these options.
-const options = {};
-
 
 
 
@@ -30,10 +27,10 @@ module.exports = async function (fastify, opts) {
     // This loads all plugins defined in plugins
     // those should be support plugins that are reused
     // through your application
-    fastify.register(AutoLoad, {
-      dir: path.join(__dirname, "plugins"),
-      options: Object.assign({}, opts),
-    });
+    // fastify.register(AutoLoad, {
+    //   dir: path.join(__dirname, "plugins"),
+    //   options: Object.assign({}, opts),
+    // });
   } catch (err) {
     fastify.log.error("Error connecting to MongoDB:", err.message);
     throw err;

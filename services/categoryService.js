@@ -6,7 +6,7 @@ async function getCategoriesWithTotalAmount() {
 
   const addTotalAmountToCategory = async (category) => {
     const expenses = await fetchExpensesByCategoryId(category._id);
-    category.total_amount = expenses.reduce(
+    category.total_price = expenses.reduce(
       (sum, expense) => sum + (expense.amount || 0),
       0
     );
@@ -27,17 +27,28 @@ async function createCategory({name, description, colour_id}) {
     throw error;
   }
 
-  const newCategory = new Category({name, description, colour_id});
+  const newCategory = new Category({
+    name,
+    description,
+    colour_id,
+    total_price: 0, // Initialize total_price to 0
+  });
   return await newCategory.save();
 }
 
 async function modifyCategory(category_id, {name, description, colour_id}) {
+  // Validate data types
   if (name !== undefined && typeof name !== "string") {
     throw Object.assign(new Error("Bad Request: Invalid data type"), {
       statusCode: 400,
     });
   }
   if (description !== undefined && typeof description !== "string") {
+    throw Object.assign(new Error("Bad Request: Invalid data type"), {
+      statusCode: 400,
+    });
+  }
+  if (colour_id !== undefined && typeof colour_id !== "string") {
     throw Object.assign(new Error("Bad Request: Invalid data type"), {
       statusCode: 400,
     });
