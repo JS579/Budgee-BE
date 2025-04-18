@@ -74,20 +74,21 @@ const seed = async ({
     }
 
     const categoryEntries = Object.entries(categoryIds);
-    for (const [categoryId] of categoryEntries) {
+    for (const [, categoryId] of categoryEntries) {
       const expenses = await expensesCol
         .find({category_id: categoryId})
         .toArray();
+
       const categoryTotal = expenses.reduce(
         (sum, expense) => sum + expense.amount,
         0
       );
+
       await categoriesCol.updateOne(
         {_id: categoryId},
         {$set: {total_amount: categoryTotal}}
       );
     }
-
     console.log("Database seeded successfully");
     await fastify.close();
   } catch (err) {
@@ -97,5 +98,4 @@ const seed = async ({
 };
 
 module.exports = seed;
-
 
