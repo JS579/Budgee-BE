@@ -6,7 +6,7 @@ async function getCategoriesWithTotalAmount() {
 
   const addTotalAmountToCategory = async (category) => {
     const expenses = await fetchExpensesByCategoryId(category._id);
-    category.total_price = expenses.reduce(
+    category.total_amount = expenses.reduce(
       (sum, expense) => sum + (expense.amount || 0),
       0
     );
