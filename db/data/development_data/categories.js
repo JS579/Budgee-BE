@@ -1,32 +1,53 @@
 module.exports = [
   {
     name: "Housing",
-    description:
-      "This includes everything from rent or mortgage payments to property taxes, HOA dues, and home maintenance costs.",
-    total_price: 900,
+    description: "Rent, mortgage, property taxes, home maintenance",
+    total_amount: 0,
   },
   {
-    name: "food",
-    description:
-      "A collection of items related to cooking, recipes, ingredients.",
-    total_price: 400,
+    name: "Food",
+    description: "Groceries, dining out, snacks",
+    total_amount: 0,
   },
   {
     name: "Transportation",
-    description:
-      "A different ways of transportation include gas, public transportation costs (including Uber or Lyft rides), oil changes or other routine car",
-    total_price: 300,
+    description: "Gas, public transit, car maintenance",
+    total_amount: 0,
   },
   {
     name: "Utilities",
-    description:
-      "The services that keep your home up and running — things like gas, electricity, water,sewage bills, internet and cell phone bills.",
-    total_price: 200,
+    description: "Electricity, water, internet, phone",
+    total_amount: 0,
   },
   {
-    name: "Medical & Healthcare",
-    description:
-      "Essential medical care such as yearly physicals and dental appointments.",
-    total_price: 200,
+    name: "Healthcare",
+    description: "Insurance, medications, doctor visits",
+    total_amount: 0,
+  },
+  {
+    name: "Entertainment",
+    description: "Streaming, movies, hobbies",
+    total_amount: 0,
+  },
+  {
+    name: "Education",
+    description: "Books, courses, school supplies",
+    total_amount: 0,
+  },
+  {
+    name: "Personal Care",
+    description: "Haircuts, toiletries, gym",
+    total_amount: 0,
+  },
+  {
+    name: "Savings",
+    description: "Emergency fund, investments",
+    total_amount: 0,
+  },
+  {
+    name: "Gifts",
+    description: "Birthdays, holidays, donations",
+    total_amount: 0,
   },
 ];
+

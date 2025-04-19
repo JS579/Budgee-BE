@@ -1,14 +1,23 @@
-'use strict'
-const getAllExpenses = require("../controllers/expensesControllers")
+"use strict";
+const {
+  getAllExpenses,
+  getExpensesByBudgetIdAndCategoryId,
+  addNewExpense,
+  updateExpense,
+  deleteExpense,
+  getExpensesByCategoryId,
+} = require("../controllers/expensesControllers");
 
-module.exports = async function (fastify, opts) {
-  fastify.get('/', async function (request, reply) {
-    return { root: true }
-  })
-}
 const expensesRoutes = async (fastify, opts) => {
-  fastify.get('/expenses', getAllExpenses)
-}
+  fastify.get("/api/expenses", getAllExpenses);
+  fastify.get("/api/expenses/category/:category_id", getExpensesByCategoryId);
+  fastify.get(
+    "/api/expenses/:budget_id/:category_id",
+    getExpensesByBudgetIdAndCategoryId
+  );
+  fastify.post("/api/expenses", addNewExpense);
+  fastify.patch("/api/expenses/:id", updateExpense);
+  fastify.delete("/api/expenses/:id", deleteExpense);
+};
 
-
-module.exports = expensesRoutes 
+module.exports = expensesRoutes;

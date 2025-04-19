@@ -1,7 +1,4 @@
-const fastify = require("fastify");
-const {dbConnection} = require("../db/connection");
-const seed = require("../db/seeds/seed");
-const testData = require("../db/data/test_data/index");
+const getApp = require("./tests.setup");
 
 describe("MongoDB connection", () => {
   let app;
@@ -12,37 +9,18 @@ describe("MongoDB connection", () => {
   let categoriesCollection;
 
   beforeAll(async () => {
-    app = fastify();
+    app = getApp();
     budgetsCollection = () => app.mongo.db.collection("budgets");
     usersCollection = () => app.mongo.db.collection("users");
     expensesCollection = () => app.mongo.db.collection("expenses");
     coloursCollection = () => app.mongo.db.collection("colours");
     categoriesCollection = () => app.mongo.db.collection("categories");
-    await dbConnection(app);
-  });
-
-  beforeEach(async () => {
-    await seed(testData);
-  });
-
-  afterAll(async () => {
-    if (app.mongo?.client) {
-      await app.mongo.client.close();
-    }
-    await app.close();
-  });
-
-  describe("checking connection", () => {
-    test("should connect to MongoDB", () => {
-      expect(app.mongo).toBeDefined();
-      expect(app.mongo.client).toBeDefined();
-    });
   });
 
   describe("Budgets Collection", () => {
-    test("should have 6 budget documents seeded", async () => {
+    test("should have 2 budget documents seeded", async () => {
       const count = await budgetsCollection().countDocuments();
-      expect(count).toBe(6);
+      expect(count).toBe(2);
     });
 
     test("should contain required fields in budget documents", async () => {
@@ -53,6 +31,7 @@ describe("MongoDB connection", () => {
       expect(budget.start_date).toBeInstanceOf(Date);
       expect(budget.end_date).toBeInstanceOf(Date);
       expect(typeof budget.username).toBe("string");
+      expect(typeof budget.remaining).toBe("number");
     });
 
     test("should match expected values for a specific budget", async () => {
@@ -63,8 +42,8 @@ describe("MongoDB connection", () => {
 
       expect(budget.budget).toBe(1500);
       expect(budget.username).toEqual("john73");
-      expect(budget.start_date).toEqual(new Date("2024-12-01T00:00:00.000Z"));
-      expect(budget.end_date).toEqual(new Date("2024-12-31T00:00:00.000Z"));
+      expect(budget.start_date).toEqual(new Date("2025-04-01T00:00:00.000Z"));
+      expect(budget.end_date).toEqual(new Date("2025-04-30T00:00:00.000Z"));
     });
   });
 
@@ -106,7 +85,7 @@ describe("MongoDB connection", () => {
   describe("Colours Collection", () => {
     test("should have 10 colour documents seeded", async () => {
       const count = await coloursCollection().countDocuments();
-      expect(count).toBe(10);
+      expect(count).toBe(6);
     });
 
     test("should contain required fields in colour documents", async () => {
@@ -132,9 +111,9 @@ describe("MongoDB connection", () => {
     });
   });
   describe("CATEGORIES Collection", () => {
-    test("should have 5 category documents seeded", async () => {
+    test("should have 6 category documents seeded", async () => {
       const count = await categoriesCollection().countDocuments();
-      expect(count).toBe(5);
+      expect(count).toBe(6);
     });
 
     test("should contain required fields in category documents", async () => {
@@ -143,59 +122,54 @@ describe("MongoDB connection", () => {
       expect(category).toHaveProperty("_id");
       expect(typeof category.name).toBe("string");
       expect(typeof category.description).toBe("string");
+      expect(typeof category.total_amount).toBe("number");
       expect(category.colour_id).toBeDefined();
     });
 
     test("should match expected values for category Food", async () => {
-      const red = await coloursCollection().findOne({name: "Red"});
       const food = await categoriesCollection().findOne({name: "Food"});
+      const actualColour = await coloursCollection().findOne({
+        _id: food.colour_id,
+      });
 
       expect(food.name).toBe("Food");
-      expect(food.description).toBe("Expenses for groceries and dining out");
-      expect(food.colour_id.toString()).toBe(red._id.toString());
+      expect(food.description).toBe("Groceries, dining out, snacks");
+      expect(actualColour.name).toBe("Blue");
     });
 
-    test("should match expected values for category Transportation", async () => {
-      const green = await coloursCollection().findOne({name: "Green"});
-      const transportation = await categoriesCollection().findOne({
-        name: "Transportation",
+    describe("Expenses Collection", () => {
+      test("should have 8 expenses documents seeded", async () => {
+        const count = await expensesCollection().countDocuments();
+        expect(count).toBe(8);
+      });
+      test("should contain required fields in expense documents", async () => {
+        const expense = await expensesCollection().findOne({
+          description: "Weekly groceries",
+        });
+
+        expect(expense).toHaveProperty("_id");
+        expect(typeof expense.description).toBe("string");
+        expect(typeof expense.amount).toBe("number");
+        expect(expense.date).toBeInstanceOf(Date);
+        expect(expense.category_id).toBeDefined();
+        expect(expense.budget_id).toBeDefined();
       });
 
-      expect(transportation.name).toBe("Transportation");
-      expect(transportation.description).toBe("Fuel, public transport, etc.");
-      expect(transportation.colour_id.toString()).toBe(green._id.toString());
-    });
-  });
-  describe("Expenses Collection", () => {
-    test("should have 6 expenses documents seeded", async () => {
-      const count = await expensesCollection().countDocuments();
-      expect(count).toBe(6);
-    });
-    test("should contain required fields in expense documents", async () => {
-      const expense = await expensesCollection().findOne({
-        description: "Weekly groceries",
+      test("should match all expected fields for 'Restaurant dinner' expense", async () => {
+        const expense = await expensesCollection().findOne({
+          description: "Restaurant dinner",
+        });
+
+        expect(expense).toBeDefined();
+        expect(expense.amount).toBe(45);
+        expect(expense.description).toBe("Restaurant dinner");
+        expect(expense.date instanceof Date).toBe(true);
+
+        const category = await categoriesCollection().findOne({
+          _id: expense.category_id,
+        });
+        expect(category.name).toBe("Personal Care");
       });
-
-      expect(expense).toHaveProperty("_id");
-      expect(typeof expense.description).toBe("string");
-      expect(typeof expense.amount).toBe("number");
-      expect(expense.date).toBeInstanceOf(Date);
-      expect(expense.category_id).toBeDefined();
-      expect(expense.budget_id).toBeDefined();
-    });
-
-    test("should match all expected fields for 'Dining out' expense", async () => {
-      const categoryTest = await categoriesCollection().findOne({name: "Food"});
-
-      const expense = await expensesCollection().findOne({
-        description: "Dining out",
-      });
-
-      expect(expense).toBeDefined();
-      expect(expense.amount).toBe(55);
-      expect(expense.description).toBe("Dining out");
-      expect(expense.date instanceof Date).toBe(true);
-      expect(expense.category_id.toString()).toBe(categoryTest._id.toString());
     });
   });
 });

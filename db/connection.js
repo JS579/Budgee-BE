@@ -1,11 +1,18 @@
 const dotenv = require("dotenv");
-const fastifyPlugin = require("fastify-plugin")
+const fastifyPlugin = require("fastify-plugin");
+const { config } = require("yargs");
 
 const ENV = process.env.NODE_ENV || "development";
 
 dotenv.config({ path: `${__dirname}/../.env.${ENV}` });
 
-const uri = process.env.MONGODB_URI;
+let uri = process.env.MONGODB_URI;
+
+
+if(ENV === "production"){
+ uri = process.env.MONGODB_URI
+}
+
 
 async function connectDatabase(fastify, options) {
   try {
@@ -19,4 +26,4 @@ async function connectDatabase(fastify, options) {
 
 const dbConnection = fastifyPlugin(connectDatabase)
 
-module.exports = { dbConnection, uri }
+module.exports = { dbConnection, uri, connectDatabase }

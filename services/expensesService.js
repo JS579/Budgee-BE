@@ -1,17 +1,16 @@
-import Expenses from "../models/expensesModels.js"
+const Expenses = require("../models/expensesModels");
 
-// Expenses.find().then((data)=>{
-//     console.log(data)
-// }).catch((error)=>{
-//     console.error(error.message)
-// })
+async function fetchExpensesByCategoryId(category_id) {
+  return await Expenses.find({category_id});
+}
 
-async function getExpenses(){
-   return await Expenses.find()
-} 
+async function fetchExpensesByBudgetIdAndCategoryId(budget_id, category_id) {
+  const expenses = await Expenses.find({category_id, budget_id});
+  return expenses;
+}
 
-export default getExpenses
+module.exports = {
+  fetchExpensesByBudgetIdAndCategoryId,
+  fetchExpensesByCategoryId,
+};
 
-// const foundExpenses = await getExpenses()
-
-// console.log(foundExpenses)

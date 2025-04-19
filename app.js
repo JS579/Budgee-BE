@@ -1,39 +1,33 @@
-'use strict'
+const {uri} = require("./db/connection");
+const mongoose = require("mongoose");
+const cors = require("@fastify/cors");
+const { root, categoriesRoutes, expensesRoutes, budgetRoutes, coloursRoutes, userRoutes} = require("./routes/indexRoutes")
 
-const path = require('node:path')
-const AutoLoad = require('@fastify/autoload')
-const expensesRoutes = require("./routes/ExpensesRoutes")
-const {uri} = require("./db/connection")
-const mongoose = require('mongoose')
 
-// Pass --options via CLI arguments in command to enable these options.
-const options = {}
 
-console.log("uri>>>", uri)
-
-mongoose.connect(uri, {bufferCommands: false});
 
 module.exports = async function (fastify, opts) {
-  // Place here your custom code!
+  try {
+      await fastify.register(cors, {
+        origin: ["http://localhost:3000", "https://budgee-be.onrender.com"],
+        credentials: true,
+      });
+    
+    await mongoose.connect(uri, {bufferCommands: false});
+    fastify.register(root);
+    fastify.register(categoriesRoutes);
+    fastify.register(expensesRoutes);
+    fastify.register(budgetRoutes);
+    fastify.register(coloursRoutes);
+    fastify.register(userRoutes);
 
-  fastify.register(expensesRoutes)
+  } catch (err) {
+    fastify.log.error("Error connecting to MongoDB:", err.message);
+    throw err;
+  }
+};
 
-  // Do not touch the following lines
 
-  // This loads all plugins defined in plugins
-  // those should be support plugins that are reused
-  // through your application
-  fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'plugins'),
-    options: Object.assign({}, opts)
-  })
 
-  // This loads all plugins defined in routes
-  // define your routes in one of these
-//   fastify.register(AutoLoad, {
-//     dir: path.join(__dirname, 'routes'),
-//     options: Object.assign({}, opts)
-//   })
-}
 
-module.exports.options = options
+

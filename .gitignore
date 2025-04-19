@@ -1,3 +1,5 @@
 node modules
 .env.*
 node_modules
+.env*
+endpoints.txt
