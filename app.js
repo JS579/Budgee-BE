@@ -9,7 +9,7 @@ const { root, categoriesRoutes, expensesRoutes, budgetRoutes, coloursRoutes, use
 module.exports = async function (fastify, opts) {
   try {
       await fastify.register(cors, {
-        origin: ["http://localhost:3000", "https://budgee-be.onrender.com"],
+        origin: ["http://localhost:3000", "https://budgee-be-amq3.onrender.com"],
         credentials: true,
       });
     
