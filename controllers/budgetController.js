@@ -1,8 +1,8 @@
 const Budget = require("../models/budgetModel");
-const {findById} = require("../models/categoryModel");
 const {
   createNewBudget,
-  modifyBudget
+  modifyBudget,
+  fetchBudgetsByUsername,
 } = require("../services/budgetServices");
 
 async function getAllBudgets(request, reply) {
@@ -21,6 +21,16 @@ async function getBudgetById(request, reply) {
     reply.code(200).send({budget});
   } catch (error) {
     reply.code(500).send({error: error.message});
+  }
+}
+
+async function getBudgetsByUsername(request, reply) {
+  try {
+    const {username} = request.params;
+    const budgetsByUser = await fetchBudgetsByUsername({username});
+    reply.code(200).send({budgetsByUser});
+  } catch (error) {
+    reply.code(404).send({error: error.message});
   }
 }
 
@@ -68,6 +78,7 @@ module.exports = {
   addNewBudget,
   updateBudget,
   deleteBudget,
+  getBudgetsByUsername,
 };
 
 

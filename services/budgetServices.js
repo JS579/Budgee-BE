@@ -9,6 +9,10 @@ async function fetchExpensesByBudgetIdAndCategoryId(budget_id, category_id) {
   return expenses;
 }
 
+async function fetchBudgetsByUsername(username) {
+  return await Budget.find(username);
+}
+
 async function createNewBudget(budget, start_date, end_date, username) {
   if (!budget || !start_date || !end_date || !username) {
     const error = new Error("Bad Request: Missing required field(s)");
@@ -51,5 +55,6 @@ module.exports = {
   fetchExpensesByCategoryId,
   createNewBudget,
   modifyBudget,
+  fetchBudgetsByUsername,
 };
 
