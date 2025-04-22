@@ -31,7 +31,7 @@ async function createNewBudget(budget, start_date, end_date, username) {
 
 async function modifyBudget(budgetId, updatedData) {
   if (updatedData.budget !== undefined) {
-    const budget = await Budget.find({_id: budgetId});
+    const budget = await Budget.findOne({where: {_id: budgetId}, raw: false});
     if (!budget) {
       const error = new Error("Budget not found");
       error.statusCode = 404;
