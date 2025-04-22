@@ -42,7 +42,8 @@ async function addNewBudget(request, reply) {
 
 async function updateBudget(request, reply) {
   try {
-    const updatedBudget = await modifyBudget(request.params.id, request.body);
+    const id = request.params.id;
+    const updatedBudget = await modifyBudget(id, request.body);
     return updatedBudget;
   } catch (error) {
     if (error.statusCode === 404) {
