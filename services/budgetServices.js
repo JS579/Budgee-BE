@@ -43,9 +43,9 @@ async function modifyBudget(budgetId, updatedData) {
       throw error;
     }
 
-    const difference = budget.budget - updatedData.budget;
-    budget.remaining -= difference;
-    await budget.save();
+    // const difference = budget.budget - updatedData.budget;
+    // budget.remaining -= difference;
+    // await budget.save();
 
 
   const updatedBudget = await Budget.findByIdAndUpdate(budgetId, updatedData, {
