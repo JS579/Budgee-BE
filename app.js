@@ -9,7 +9,8 @@ const { root, categoriesRoutes, expensesRoutes, budgetRoutes, coloursRoutes, use
 module.exports = async function (fastify, opts) {
   try {
       await fastify.register(cors, {
-        origin: "*"
+        origin: "*",
+        methods: ["GET", "PATCH", "POST", "DELETE"]
       });
     
     await mongoose.connect(uri, {bufferCommands: false});
