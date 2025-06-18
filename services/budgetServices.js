@@ -30,23 +30,18 @@ async function createNewBudget(budget, start_date, end_date, username) {
 }
 
 async function modifyBudget(budgetId, updatedData) {
-    const budget = await Budget.find({where: {_id: budgetId}, raw: false});
+  if (updatedData.budget !== undefined) {
+    const budget = await Budget.findById(budgetId);
     if (!budget) {
       const error = new Error("Budget not found");
       error.statusCode = 404;
       throw error;
     }
 
-    if(!budgetId){
-      const error = new Error("BudgetId not found");
-      error.statusCode = 404;
-      throw error;
-    }
-
-    // const difference = budget.budget - updatedData.budget;
-    // budget.remaining -= difference;
-    // await budget.save();
-
+    const difference = budget.budget - updatedData.budget;
+    budget.remaining -= difference;
+    await budget.save();
+  }
 
   const updatedBudget = await Budget.findByIdAndUpdate(budgetId, updatedData, {
     new: true,
